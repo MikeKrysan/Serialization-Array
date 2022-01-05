@@ -10,14 +10,20 @@ public class ReadObject {
             FileInputStream fis = new FileInputStream("people.bin");
             ObjectInputStream ois  = new ObjectInputStream(fis);
 
-            int personCount = ois.readInt();    // В этой переменной хранится количество объектов
-            Person[] people = new Person[personCount];
+            //1-й способ записи массива в файл - записали три отдельных объекта
+//            int personCount = ois.readInt();  // В этой переменной хранится количество объектов
+//            Person[] people = new Person[personCount];
+//
+//            for(int i = 0; i < personCount; i++) {
+//                people[i] = (Person) ois.readObject();
+//            }
+//            System.out.println(Arrays.toString(people));
 
-            for(int i = 0; i < personCount; i++) {
-               people[i] = (Person) ois.readObject();
-            }
-
+            //2-й способ записи массива в файл - более предпочтительнее. Записали один объект - массив
+            Person[] people = (Person[]) ois.readObject(); // Этот метод возвратит тот объект, который был записан в файл(массив Person[]) и мы ожидаем на выходе массив объектов класса Person
             System.out.println(Arrays.toString(people));
+
+            ois.close();
 
         } catch (IOException e) {
             e.printStackTrace();
